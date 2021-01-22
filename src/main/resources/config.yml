@@ -1,0 +1,6 @@
+Database:
+  Host: "localhost"
+  Username: "root"
+  Password: ""
+  Port: 3306
+  DatabaseName: "seichi915support_accounts"

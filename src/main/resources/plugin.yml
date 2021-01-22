@@ -1,0 +1,16 @@
+name: Seichi915CodeCore
+version: 1.0.0
+main: net.seichi915.seichi915codecore.Seichi915CodeCore
+api-version: "1.13"
+load: POSTWORLD
+authors: [stouma915]
+description: "seichi915Code コアプラグイン"
+website: https://www.seichi915.net
+permissions:
+  seichi915codecore.*:
+    description: Grant all permissions of seichi915CodeCore
+    children:
+      seichi915codecore.getcode: true
+  seichi915codecore.getcode:
+    description: Permission to get verify code
+    default: true
