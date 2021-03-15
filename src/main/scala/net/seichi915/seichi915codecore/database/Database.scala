@@ -1,5 +1,6 @@
 package net.seichi915.seichi915codecore.database
 
+import net.seichi915.seichi915codecore.Seichi915CodeCore
 import net.seichi915.seichi915codecore.code.Code
 import net.seichi915.seichi915codecore.configuration.Configuration
 import org.bukkit.entity.Player
@@ -12,7 +13,11 @@ import scala.util.{Failure, Success}
 object Database {
   Class.forName("com.mysql.jdbc.Driver")
 
-  ConnectionPool.singleton(
+  private val dbName =
+    Seichi915CodeCore.instance.getDescription.getName.toLowerCase
+
+  ConnectionPool.add(
+    dbName,
     s"jdbc:mysql://${Configuration.getDatabaseHost}:${Configuration.getDatabasePort}/${Configuration.getDatabaseName}",
     Configuration.getDatabaseUsername,
     Configuration.getDatabasePassword
@@ -23,7 +28,7 @@ object Database {
   )
 
   def getCode(player: Player): Future[Option[Code]] = Future {
-    DB localTx { implicit session =>
+    NamedDB(dbName) localTx { implicit session =>
       sql"SELECT code FROM codes WHERE uuid = ${player.getUniqueId.toString}"
         .map { resultSet =>
           val code = resultSet.string("code")
@@ -46,12 +51,12 @@ object Database {
     getCode(player) onComplete {
       case Success(value) =>
         if (value.nonEmpty)
-          DB localTx { implicit session =>
+          NamedDB(dbName) localTx { implicit session =>
             sql"UPDATE codes SET code = ${code.toString} WHERE uuid = ${player.getUniqueId.toString}"
               .update()
               .apply()
           } else
-          DB localTx { implicit session =>
+          NamedDB(dbName) localTx { implicit session =>
             sql"INSERT INTO codes (uuid, code) VALUES (${player.getUniqueId.toString}, ${code.toString})"
               .update()
               .apply()
