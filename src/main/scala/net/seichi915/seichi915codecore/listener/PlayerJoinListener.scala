@@ -23,44 +23,56 @@ class PlayerJoinListener extends Listener {
               Bukkit.getScheduler
                 .runTask(
                   Seichi915CodeCore.instance,
-                  (() =>
-                     event.getPlayer.kickPlayer(
-                       List(
-                         s"${ChatColor.AQUA}[${ChatColor.GREEN}seichi915Network${ChatColor.AQUA}]${ChatColor.RESET}",
-                         s"次のコードを生成しました: ${ChatColor.YELLOW}${ChatColor.UNDERLINE}${newCode.toString}${ChatColor.RESET}",
-                         "",
-                         s"${ChatColor.GRAY}次のコードは削除されました: ${value.get.toString}${ChatColor.RESET}"
-                       ).mkString("\n")
-                     )): Runnable
+                  (
+                      () =>
+                        event.getPlayer.kickPlayer(
+                          List(
+                            s"${ChatColor.AQUA}[${ChatColor.GREEN}seichi915Network${ChatColor.AQUA}]${ChatColor.RESET}",
+                            s"次のコードを生成しました: ${ChatColor.YELLOW}${ChatColor.UNDERLINE}${newCode.toString}${ChatColor.RESET}",
+                            "",
+                            s"${ChatColor.GRAY}次のコードは削除されました: ${value.get.toString}${ChatColor.RESET}"
+                          ).mkString("\n")
+                        )
+                  ): Runnable
                 )
             else
               Bukkit.getScheduler
                 .runTask(
                   Seichi915CodeCore.instance,
-                  (() =>
-                     event.getPlayer.kickPlayer(
-                       List(
-                         s"${ChatColor.AQUA}[${ChatColor.GREEN}seichi915Network${ChatColor.AQUA}]${ChatColor.RESET}",
-                         s"次のコードを生成しました: ${ChatColor.YELLOW}${ChatColor.UNDERLINE}${newCode.toString}${ChatColor.RESET}",
-                         "",
-                         ""
-                       ).mkString("\n")
-                     )): Runnable
+                  (
+                      () =>
+                        event.getPlayer.kickPlayer(
+                          List(
+                            s"${ChatColor.AQUA}[${ChatColor.GREEN}seichi915Network${ChatColor.AQUA}]${ChatColor.RESET}",
+                            s"次のコードを生成しました: ${ChatColor.YELLOW}${ChatColor.UNDERLINE}${newCode.toString}${ChatColor.RESET}",
+                            "",
+                            ""
+                          ).mkString("\n")
+                        )
+                  ): Runnable
                 )
           case Failure(exception) =>
             exception.printStackTrace()
             Bukkit.getScheduler
-              .runTask(Seichi915CodeCore.instance,
-                       (() =>
-                          event.getPlayer.kickPlayer(
-                            "コードの生成に失敗しました。".toErrorMessage)): Runnable)
+              .runTask(
+                Seichi915CodeCore.instance,
+                (
+                    () =>
+                      event.getPlayer.kickPlayer(
+                        "コードの生成に失敗しました。".toErrorMessage
+                      )
+                ): Runnable
+              )
         }
       case Failure(exception) =>
         exception.printStackTrace()
         Bukkit.getScheduler
-          .runTask(Seichi915CodeCore.instance,
-                   (() =>
-                      event.getPlayer.kickPlayer(
-                        "コードの生成に失敗しました。".toErrorMessage)): Runnable)
+          .runTask(
+            Seichi915CodeCore.instance,
+            (
+                () =>
+                  event.getPlayer.kickPlayer("コードの生成に失敗しました。".toErrorMessage)
+            ): Runnable
+          )
     }
 }

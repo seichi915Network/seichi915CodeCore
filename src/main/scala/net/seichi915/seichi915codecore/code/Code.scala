@@ -18,11 +18,11 @@ object Code {
   def generateRandomCode: Code =
     Code(
       s"$getRandomAlphabet$getRandomAlphabet$getRandomAlphabet$getRandomAlphabet",
-      s"$getRandomNumber$getRandomNumber$getRandomNumber$getRandomNumber".toInt,
+      s"$getRandomNumber$getRandomNumber$getRandomNumber$getRandomNumber",
       s"$getRandomAlphabet$getRandomAlphabet$getRandomAlphabet$getRandomAlphabet"
     )
 }
 
-case class Code(first: String, middle: Int, last: String) {
+case class Code(first: String, middle: String, last: String) {
   override def toString: String = s"$first$middle$last"
 }
